@@ -42,7 +42,7 @@ navigator.getUserMedia(constraints, function (stream) {
     videoElement.src = window.URL.createObjectURL(stream);
     videoElement.play();
 }, function (error) {
-    console.log('navigator.getUserMedia error: ', error);s
+    console.log('navigator.getUserMedia error: ', error);
 });
 </script>
 </body>
