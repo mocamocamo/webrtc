@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>camera test</title>
+</head>
+<body>
+<div>
+    <video muted autoplay></video>
+</div>
+
+<script type="text/javascript">
+"use strict";
+
+navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+
+var __sVideoSourceId = null;
+MediaStreamTrack.getSources(function(sourceInfos) {
+    for (var i = 0; i < sourceInfos.length; i++) {
+        if (sourceInfos[i].kind == 'video') {
+            __sVideoSourceId = sourceInfos[i].id;
+        }
+    }
+});
+
+if (window.__stream) {
+    videoElement.src = null;
+    window.__stream.stop();
+}
+
+var constraints = {
+    video: {
+        optional: [{
+            sourceId: __sVideoSourceId
+        }]
+    }
+};
+
+navigator.getUserMedia(constraints, function (stream) {
+    window.__stream = stream; // make stream available to console
+    var videoElement = document.querySelector('video');
+    videoElement.src = window.URL.createObjectURL(stream);
+    videoElement.play();
+}, function (error) {
+    console.log('navigator.getUserMedia error: ', error);s
+});
+</script>
+</body>
+</html>
